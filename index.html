@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VibeVoice Experiments</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f8f9fa;
+                color: #333;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 40px;
+                padding: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .description {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #666;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .github-link {
+                color: #0366d6;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .github-link:hover {
+                text-decoration: underline;
+            }
+
+            .experiment-table {
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                margin-top: 30px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th {
+                background: #34495e;
+                color: white;
+                padding: 15px;
+                text-align: left;
+                font-weight: 600;
+            }
+
+            td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                vertical-align: middle;
+            }
+
+            tr:last-child td {
+                border-bottom: none;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f8f9fa;
+            }
+
+            .voice-name {
+                font-weight: 600;
+                color: #2c3e50;
+                font-size: 16px;
+            }
+
+            .model-info {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .model-size {
+                font-weight: 600;
+                color: #e74c3c;
+            }
+
+            .precision {
+                font-size: 12px;
+                padding: 2px 6px;
+                border-radius: 3px;
+                font-weight: 500;
+                display: inline-block;
+            }
+
+            .f32 {
+                background: #e8f5e8;
+                color: #27ae60;
+            }
+
+            .f16 {
+                background: #fff3cd;
+                color: #856404;
+            }
+
+            .unofficial {
+                font-size: 11px;
+                color: #666;
+                font-style: italic;
+            }
+
+            audio {
+                width: 250px;
+                height: 32px;
+            }
+
+            .sample-type {
+                font-size: 12px;
+                color: #666;
+                margin-top: 4px;
+            }
+
+            .reference-sample {
+                background: #e3f2fd;
+                border-left: 3px solid #2196f3;
+            }
+
+            .reference-label {
+                color: #1976d2;
+                font-weight: 600;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    padding: 10px;
+                }
+
+                table {
+                    font-size: 14px;
+                }
+
+                th,
+                td {
+                    padding: 10px 8px;
+                }
+
+                audio {
+                    width: 200px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>VibeVoice Experiments</h1>
+            <div class="description">
+                <p>
+                    This page showcases audio samples generated using
+                    <a
+                        href="https://github.com/microsoft/VibeVoice"
+                        class="github-link"
+                        >Microsoft's VibeVoice</a
+                    >
+                    text-to-speech model. The experiments include:
+                </p>
+                <ul
+                    style="
+                        text-align: left;
+                        display: inline-block;
+                        margin: 15px 0;
+                    "
+                >
+                    <li>
+                        <strong>Official 1.5B model</strong> with float32
+                        parameters
+                    </li>
+                    <li>
+                        <strong
+                            >Unofficial half-precision (f16) versions</strong
+                        >
+                        of both 1.5B and 7B models with weights converted
+                        directly from the official f32 weights
+                    </li>
+                </ul>
+                <p>
+                    Each voice has reference samples and synthesized outputs
+                    from different model configurations.
+                </p>
+            </div>
+        </div>
+
+        <div class="experiment-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Voice</th>
+                        <th>Model Configuration</th>
+                        <th>Audio Sample</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="reference-sample">
+                        <td>
+                            <div class="voice-name">Josiah</div>
+                            <div class="sample-type reference-label">
+                                Reference Sample
+                            </div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <span>Original voice recording</span>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Josiah-sample.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Josiah</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">1.5B Parameters</div>
+                                <span class="precision f32"
+                                    >Float32 (Official)</span
+                                >
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Josiah-1.5B-f32.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Josiah</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">1.5B Parameters</div>
+                                <span class="precision f16"
+                                    >Float16 (Unofficial)</span
+                                >
+                                <div class="unofficial">Custom conversion</div>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Josiah-1.5B-f16.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Josiah</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">7B Parameters</div>
+                                <span class="precision f16"
+                                    >Float16 (Unofficial)</span
+                                >
+                                <div class="unofficial">Custom conversion</div>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Josiah-7B-f16.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr class="reference-sample">
+                        <td>
+                            <div class="voice-name">Tien</div>
+                            <div class="sample-type reference-label">
+                                Reference Sample
+                            </div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <span>Original voice recording</span>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Tien-sample.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Tien</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">1.5B Parameters</div>
+                                <span class="precision f32"
+                                    >Float32 (Official)</span
+                                >
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Tien-1.5B-f32.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Tien</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">1.5B Parameters</div>
+                                <span class="precision f16"
+                                    >Float16 (Unofficial)</span
+                                >
+                                <div class="unofficial">Custom conversion</div>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Tien-1.5B-f16.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="voice-name">Tien</div>
+                            <div class="sample-type">Synthesized</div>
+                        </td>
+                        <td>
+                            <div class="model-info">
+                                <div class="model-size">7B Parameters</div>
+                                <span class="precision f16"
+                                    >Float16 (Unofficial)</span
+                                >
+                                <div class="unofficial">Custom conversion</div>
+                            </div>
+                        </td>
+                        <td>
+                            <audio controls>
+                                <source
+                                    src="audio/Tien-7B-f16.wav"
+                                    type="audio/wav"
+                                />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
